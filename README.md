@@ -9,8 +9,4 @@ AWS CLI (configured with appropriate credentials)
 An AWS account with necessary permissions
 
 
-├── main.tf        # Main Terraform configuration file
-├── outputs.tf     # Outputs of the Terraform configuration
-├── providers.tf   # Provider configuration
-├── variables.tf   # Variables used in the configuration
-├── README.md      # This README file
+
