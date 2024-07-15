@@ -47,6 +47,10 @@ jobs:
       id: validate
       run: terraform validate
 
+    - name: Terraform Format Check
+      id: fmt
+      run: terraform fmt -check
+
     - name: Terraform Plan
       id: plan
       run: terraform plan -out=tfplan
@@ -99,3 +103,4 @@ jobs:
     - name: Terraform Apply
       id: apply
       run: terraform apply tfplan
+
