@@ -1,5 +1,5 @@
 provider "aws" {
-  region = "us-east-1"  
+  region = "us-east-1" 
 }
 
 # Module: VPC
@@ -24,9 +24,9 @@ module "ec2" {
   source = "git@github.com:Coalfire-CF/terraform-aws-ec2.git"
 
   ami           = "ami-0583d8c7a9c35822c"
-  instance_type = "t3.micro"
+  instance_type = "t2.micro"
   subnet_id     = module.vpc.private_subnets[0]
-  key_name      = "ty_key""
+  key_name      = "talyoffee"
   vpc_security_group_ids = [module.vpc.default_security_group_id]
 
   tags = {
