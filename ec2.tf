@@ -3,7 +3,7 @@ resource "random_pet" "asg_suffix" {
 }
 
 resource "aws_iam_role" "asg_role" {
-  name = "asg_role_${random_pet.asg_suffix.id}"  # Ensure unique role name
+  name = "asg_role_${random_pet.asg_suffix.id}" # Ensure unique role name
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
@@ -36,7 +36,7 @@ resource "aws_iam_role_policy" "asg_policy" {
 }
 
 resource "aws_iam_instance_profile" "asg_instance_profile" {
-  name = "asg_instance_profile_${random_pet.asg_suffix.id}"  # Ensure unique profile name
+  name = "asg_instance_profile_${random_pet.asg_suffix.id}" # Ensure unique profile name
   role = aws_iam_role.asg_role.name
 }
 
@@ -110,7 +110,7 @@ module "ec2_instance" {
 }
 
 resource "aws_launch_template" "asg_launch_template" {
-  name = "asg-launch-template-${random_pet.asg_suffix.id}"  # Ensure unique template name
+  name = "asg-launch-template-${random_pet.asg_suffix.id}" # Ensure unique template name
 
   iam_instance_profile {
     name = aws_iam_instance_profile.asg_instance_profile.name
@@ -163,7 +163,7 @@ resource "aws_autoscaling_group" "example_asg" {
 }
 
 resource "aws_autoscaling_attachment" "asg_attachment" {
-  depends_on = [aws_autoscaling_group.example_asg]
+  depends_on             = [aws_autoscaling_group.example_asg]
   autoscaling_group_name = aws_autoscaling_group.example_asg.name
   lb_target_group_arn    = aws_lb_target_group.asg_target_group.arn
 }

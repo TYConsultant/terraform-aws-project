@@ -3,7 +3,7 @@ resource "random_pet" "alb_suffix" {
 }
 
 resource "aws_iam_role" "alb_role" {
-  name = "alb_role_${random_pet.alb_suffix.id}"  # Ensure unique role name
+  name = "alb_role_${random_pet.alb_suffix.id}" # Ensure unique role name
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
@@ -20,7 +20,7 @@ resource "aws_iam_role" "alb_role" {
 }
 
 resource "aws_lb" "alb" {
-  name               = "application-load-balancer-${random_pet.alb_suffix.id}"  # Ensure unique LB name
+  name               = "application-load-balancer-${random_pet.alb_suffix.id}" # Ensure unique LB name
   internal           = false
   load_balancer_type = "application"
   security_groups    = [aws_security_group.alb_sg.id]
