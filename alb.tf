@@ -23,8 +23,8 @@ resource "aws_iam_role_policy" "alb_policy" {
     Version = "2012-10-17"
     Statement = [
       {
-        Action = "s3:PutObject"
-        Effect = "Allow"
+        Action   = "s3:PutObject"
+        Effect   = "Allow"
         Resource = "arn:aws:s3:::log-bucket/*"
       }
     ]
@@ -58,7 +58,7 @@ resource "aws_security_group" "alb_sg" {
 }
 
 module "alb" {
-  source  = "git::https://github.com/terraform-aws-modules/terraform-aws-alb.git"
+  source = "git::https://github.com/terraform-aws-modules/terraform-aws-alb.git"
 
   name               = "application-load-balancer"
   load_balancer_type = "application"
@@ -72,7 +72,7 @@ module "alb" {
       port     = 80
       protocol = "HTTP"
       default_action = {
-        type             = "forward"
+        type               = "forward"
         target_group_index = 0
       }
     }
