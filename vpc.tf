@@ -1,6 +1,3 @@
-provider "aws" {
-  region = "us-east-1"
-}
 
 module "vpc" {
   source = "git::https://github.com/terraform-aws-modules/terraform-aws-vpc.git//?ref=master"
@@ -33,4 +30,3 @@ output "private_subnets" {
   description = "The private subnets"
   value       = module.vpc.private_subnets
 }
-
