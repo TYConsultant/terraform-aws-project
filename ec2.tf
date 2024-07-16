@@ -24,8 +24,8 @@ resource "aws_iam_role_policy" "asg_policy" {
     Version = "2012-10-17"
     Statement = [
       {
-        Action = "s3:GetObject"
-        Effect = "Allow"
+        Action   = "s3:GetObject"
+        Effect   = "Allow"
         Resource = "arn:aws:s3:::images/*"
       }
     ]
@@ -39,7 +39,7 @@ resource "aws_iam_instance_profile" "asg_instance_profile" {
 
 data "aws_ami" "redhat" {
   most_recent = true
-  owners      = ["309956199498"]  # Red Hat's owner ID
+  owners      = ["309956199498"] # Red Hat's owner ID
 
   filter {
     name   = "name"
@@ -144,10 +144,10 @@ resource "aws_autoscaling_group" "example_asg" {
     module.vpc.private_subnets[3]
   ]
 
-  min_size = 2
-  max_size = 6
-  desired_capacity = 2
-  health_check_type = "EC2"
+  min_size                  = 2
+  max_size                  = 6
+  desired_capacity          = 2
+  health_check_type         = "EC2"
   health_check_grace_period = 300
 
   tag {
