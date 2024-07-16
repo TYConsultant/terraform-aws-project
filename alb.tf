@@ -72,8 +72,8 @@ module "alb" {
       port     = 80
       protocol = "HTTP"
       default_action = {
-        type             = "forward"
-        target_group_arn = ""
+        type               = "forward"
+        target_group_index = 0
       }
     }
   ]
@@ -102,10 +102,6 @@ module "alb" {
   tags = {
     Name = "application-load-balancer"
   }
-}
-
-output "alb_target_group_arns" {
-  value = module.alb.target_groups[0].arn
 }
 
 resource "aws_autoscaling_attachment" "asg_attachment" {
