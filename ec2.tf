@@ -140,8 +140,8 @@ resource "aws_autoscaling_group" "example_asg" {
   }
 
   vpc_zone_identifier = [
-    module.vpc.private_subnets[2],
-    module.vpc.private_subnets[3]
+    module.vpc.private_subnets[0],
+    module.vpc.private_subnets[1]
   ]
 
   min_size                  = 2
@@ -156,6 +156,7 @@ resource "aws_autoscaling_group" "example_asg" {
     propagate_at_launch = true
   }
 }
+
 
 output "security_group_id" {
   description = "The ID of the security group"
