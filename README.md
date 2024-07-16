@@ -8,5 +8,10 @@ Terraform (v1.0 or later)
 AWS CLI (configured with appropriate credentials)
 An AWS account with necessary permissions
 
+GitHub Actions Pipeline
+This project utilizes GitHub Actions for CI/CD automation. The pipeline is triggered on pushes to the dev branch and pull requests targeting the main branch.
+
+Useful links
+https://access.redhat.com/solutions/15356
 
 
