@@ -3,7 +3,7 @@ resource "random_pet" "alb_suffix" {
 }
 
 resource "aws_iam_role" "alb_role" {
-  name = "alb_role_${random_pet.alb_suffix.id}"  # Ensure unique role name
+  name = "alb_role_${random_pet.alb_suffix.id}" # Ensure unique role name
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
@@ -20,7 +20,7 @@ resource "aws_iam_role" "alb_role" {
 }
 
 resource "aws_lb" "alb" {
-  name               = "alb-${random_pet.alb_suffix.id}"  # Ensure unique and shorter LB name
+  name               = "alb-${random_pet.alb_suffix.id}" # Ensure unique and shorter LB name
   internal           = false
   load_balancer_type = "application"
   security_groups    = [aws_security_group.alb_sg.id]
@@ -60,7 +60,7 @@ resource "aws_security_group" "alb_sg" {
 }
 
 resource "aws_lb_target_group" "asg_target_group" {
-  name        = "asg-tg-${random_pet.alb_suffix.id}"  # Ensure unique and shorter TG name
+  name        = "asg-tg-${random_pet.alb_suffix.id}" # Ensure unique and shorter TG name
   port        = 80
   protocol    = "HTTP"
   vpc_id      = module.vpc.vpc_id
