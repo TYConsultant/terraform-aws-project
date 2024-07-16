@@ -3,30 +3,16 @@ provider "aws" {
 }
 
 module "vpc" {
-  source = "git::https://github.com/Coalfire-CF/terraform-aws-vpc-nfw.git"
+  source = "git::https://github.com/terraform-aws-modules/terraform-aws-vpc.git//?ref=master"
 
-  cidr = "10.1.0.0/16"
-  azs  = ["us-east-1a", "us-east-1b"]
-
-  private_subnets = {
-    "subnet-3" = "10.1.2.0/24",
-    "subnet-4" = "10.1.3.0/24"
-  }
-
-  public_subnets = {
-    "subnet-1" = "10.1.0.0/24",
-    "subnet-2" = "10.1.1.0/24"
-  }
-
-  single_nat_gateway     = true
-  enable_nat_gateway     = true
-  enable_vpn_gateway     = false
-  enable_dns_hostnames   = true
-  enable_dns_support     = true
-
-  flow_log_destination_type              = "cloud-watch-logs"
-  cloudwatch_log_group_retention_in_days = 30
-  cloudwatch_log_group_kms_key_id        = "" 
+  name                 = "ty-vpc"
+  cidr                 = "10.1.0.0/16"
+  azs                  = ["us-east-1a", "us-east-1b"]
+  private_subnets      = ["10.1.2.0/24", "10.1.3.0/24"]
+  public_subnets       = ["10.1.0.0/24", "10.1.1.0/24"]
+  enable_dns_support   = true
+  enable_dns_hostnames = true
+  enable_nat_gateway   = true
 
   tags = {
     Name = "my-vpc"
