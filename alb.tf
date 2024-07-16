@@ -72,8 +72,8 @@ module "alb" {
       port     = 80
       protocol = "HTTP"
       default_action = {
-        type               = "forward"
-        target_group_index = 0
+        type             = "forward"
+        target_group_arn = ""
       }
     }
   ]
@@ -105,7 +105,7 @@ module "alb" {
 }
 
 output "alb_target_group_arns" {
-  value = module.alb.target_groups.*.arn
+  value = module.alb.target_groups[0].arn
 }
 
 resource "aws_autoscaling_attachment" "asg_attachment" {
