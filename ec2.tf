@@ -1,28 +1,39 @@
-resource "aws_iam_role" "ssm_role" {
-  name = "ssm_role"
+resource "aws_iam_role" "asg_role" {
+  name = "asg_role"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
       {
+        Action = "sts:AssumeRole"
         Effect = "Allow"
         Principal = {
           Service = "ec2.amazonaws.com"
         }
-        Action = "sts:AssumeRole"
       }
     ]
   })
 }
 
-resource "aws_iam_role_policy_attachment" "ssm_attach" {
-  role       = aws_iam_role.ssm_role.name
-  policy_arn = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
+resource "aws_iam_role_policy" "asg_policy" {
+  name = "asg_policy"
+  role = aws_iam_role.asg_role.id
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Action   = "s3:GetObject"
+        Effect   = "Allow"
+        Resource = "arn:aws:s3:::images/*"
+      }
+    ]
+  })
 }
 
-resource "aws_iam_instance_profile" "ssm_instance_profile" {
-  name = "ssm_instance_profile"
-  role = aws_iam_role.ssm_role.name
+resource "aws_iam_instance_profile" "asg_instance_profile" {
+  name = "asg_instance_profile"
+  role = aws_iam_role.asg_role.name
 }
 
 data "aws_ami" "redhat" {
@@ -39,6 +50,14 @@ resource "aws_security_group" "example" {
   name_prefix = "example-sg-"
   description = "Security group for example instance"
   vpc_id      = module.vpc.vpc_id
+
+  ingress {
+    description = "Allow SSH"
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
 
   ingress {
     description = "Allow HTTP"
@@ -83,14 +102,14 @@ module "ec2_instance" {
     delete_on_termination = true
   }]
 
-  iam_instance_profile = aws_iam_instance_profile.ssm_instance_profile.name
+  iam_instance_profile = aws_iam_instance_profile.asg_instance_profile.name
 }
 
 resource "aws_launch_template" "asg_launch_template" {
   name = "asg-launch-template"
 
   iam_instance_profile {
-    name = aws_iam_instance_profile.ssm_instance_profile.name
+    name = aws_iam_instance_profile.asg_instance_profile.name
   }
 
   image_id      = data.aws_ami.redhat.id
