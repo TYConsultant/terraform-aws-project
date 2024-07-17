@@ -19,6 +19,11 @@ resource "aws_iam_role" "asg_role" {
   })
 }
 
+resource "aws_iam_role_policy_attachment" "asg_ssm_policy_attachment" {
+  role       = aws_iam_role.asg_role.name
+  policy_arn = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
+}
+
 resource "aws_iam_role_policy" "asg_policy" {
   name = "asg_policy"
   role = aws_iam_role.asg_role.id
@@ -122,9 +127,11 @@ resource "aws_launch_template" "asg_launch_template" {
   user_data = base64encode(<<-EOF
               #!/bin/bash
               yum update -y
-              yum install -y httpd
+              yum install -y httpd amazon-ssm-agent
               systemctl start httpd
               systemctl enable httpd
+              systemctl start amazon-ssm-agent
+              systemctl enable amazon-ssm-agent
               EOF
   )
 
