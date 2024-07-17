@@ -2,6 +2,10 @@ resource "random_pet" "asg_suffix" {
   length = 2
 }
 
+resource "random_pet" "single_instance_suffix" {
+  length = 2
+}
+
 resource "aws_iam_role" "asg_role" {
   name = "asg_role_${random_pet.asg_suffix.id}" # Ensure unique role name
 
@@ -43,6 +47,33 @@ resource "aws_iam_role_policy" "asg_policy" {
 resource "aws_iam_instance_profile" "asg_instance_profile" {
   name = "asg_instance_profile_${random_pet.asg_suffix.id}" # Ensure unique profile name
   role = aws_iam_role.asg_role.name
+}
+
+resource "aws_iam_role" "single_instance_role" {
+  name = "single_instance_role_${random_pet.single_instance_suffix.id}" # Ensure unique role name
+
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Action = "sts:AssumeRole"
+        Effect = "Allow"
+        Principal = {
+          Service = "ec2.amazonaws.com"
+        }
+      }
+    ]
+  })
+}
+
+resource "aws_iam_role_policy_attachment" "single_instance_ssm_policy_attachment" {
+  role       = aws_iam_role.single_instance_role.name
+  policy_arn = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
+}
+
+resource "aws_iam_instance_profile" "single_instance_profile" {
+  name = "single_instance_profile_${random_pet.single_instance_suffix.id}" # Ensure unique profile name
+  role = aws_iam_role.single_instance_role.name
 }
 
 data "aws_ami" "redhat" {
@@ -111,7 +142,7 @@ module "ec2_instance" {
     delete_on_termination = true
   }]
 
-  iam_instance_profile = aws_iam_instance_profile.asg_instance_profile.name
+  iam_instance_profile = aws_iam_instance_profile.single_instance_profile.name
 }
 
 resource "aws_launch_template" "asg_launch_template" {
