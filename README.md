@@ -14,9 +14,9 @@ An AWS account with necessary permissions
 
 This project utilizes GitHub Actions for CI/CD automation. The pipeline is triggered on pushes to the dev branch and pull requests targeting the main branch.
 
-# Useful links
+## Useful links
 
-https://access.redhat.com/solutions/15356
-https://github.com/terraform-aws-modules
+[REDHAT AMI]([https://choosealicense.com/licenses/mit/](https://access.redhat.com/solutions/15356 )
+[TERRAFORM-AWS-MODULES]([https://github.com/terraform-aws-modules)
 
 
