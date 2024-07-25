@@ -16,7 +16,8 @@ This project utilizes GitHub Actions for CI/CD automation. The pipeline is trigg
 
 ## Useful links
 
-[REDHAT AMI]([https://choosealicense.com/licenses/mit/](https://access.redhat.com/solutions/15356 )
-[TERRAFORM-AWS-MODULES]([https://github.com/terraform-aws-modules)
+[REDHAT AMI](https://access.redhat.com/solutions/15356)
+[TERRAFORM-AWS-MODULES](https://github.com/terraform-aws-modules)
+
 
 
